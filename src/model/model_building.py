@@ -75,7 +75,7 @@ def save_outputs(model: RandomForestClassifier, X_test_scaled: np.ndarray, metri
 def main():
     train_path = "./data/featured_data/train_data"
     test_path = "./data/featured_data/test_data"
-    model_path = "./models/model.pkl"
+    model_path = "./reports/model.pkl"
     metrics_path = os.path.join("./models", "evaluation_data")
     test_data_path = os.path.join("./data/interim", "X_test_scaled")
 
