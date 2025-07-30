@@ -1,0 +1,103 @@
+schema: '2.0'
+stages:
+  data-ingestion:
+    cmd: python src/data/dataingestion.py
+    deps:
+    - path: src/data/dataingestion.py
+      hash: md5
+      md5: 17ca29b59075317ecf0c6705e0911e2b
+      size: 2711
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 048f57586a28d1cb84e5a110341c98a9.dir
+      size: 37842
+      nfiles: 3
+  datapreprocessing:
+    cmd: python src/features/cleaning.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 048f57586a28d1cb84e5a110341c98a9.dir
+      size: 37842
+      nfiles: 3
+    - path: src/features/cleaning.py
+      hash: md5
+      md5: c66e7910c6c7db52c9fa206610a93a74
+      size: 2392
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: d22da2da4a3a264eda5276af8f2b5d04.dir
+      size: 33035
+      nfiles: 2
+  dataengineering:
+    cmd: python src/features/featureengineering.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: d22da2da4a3a264eda5276af8f2b5d04.dir
+      size: 33035
+      nfiles: 2
+    - path: src/features/featureengineering.py
+      hash: md5
+      md5: a4394ea9258b7d7683d267d6d4c77222
+      size: 2436
+    outs:
+    - path: data/featured_data
+      hash: md5
+      md5: e7dc1f9f10967c84e9dcfba3419295dd.dir
+      size: 36056
+      nfiles: 2
+  model_building:
+    cmd: python src/model/model_building.py
+    deps:
+    - path: data/featured_data
+      hash: md5
+      md5: e7dc1f9f10967c84e9dcfba3419295dd.dir
+      size: 36056
+      nfiles: 2
+    - path: src/model/model_building.py
+      hash: md5
+      md5: d3ec2bf112bf8b129ed6fd7c0b3c025d
+      size: 3188
+    params:
+      params.yaml:
+        model_building.n_estimators: 100
+    outs:
+    - path: data/interim/X_test_scaled
+      hash: md5
+      md5: 5771ffc70620324cce8367097391d318
+      size: 58241
+    - path: models/evaluation_data
+      hash: md5
+      md5: aa1f416fb5130c3be116f61fa658c515.dir
+      size: 41
+      nfiles: 1
+    - path: reports/model.pkl
+      hash: md5
+      md5: 7cc37db861e05f6e75e817f2bdef2338
+      size: 2889537
+  result_submission:
+    cmd: python src/model/model_submission.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: d50970be05a6b8f9a48c34feb940ba2a.dir
+      size: 58241
+      nfiles: 2
+    - path: data/raw
+      hash: md5
+      md5: 048f57586a28d1cb84e5a110341c98a9.dir
+      size: 37842
+      nfiles: 3
+    - path: src/model/model_submission.py
+      hash: md5
+      md5: 4a8322814e84d7b84b7b1f31b625a3a4
+      size: 2033
+    outs:
+    - path: models/submission
+      hash: md5
+      md5: e0976ff128df214b926ec2874c29393b.dir
+      size: 3258
+      nfiles: 1
