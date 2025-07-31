@@ -24,11 +24,8 @@ stages:
     deps:
     - data/featured_data
     - src/model/model_building.py
-    params:
-    - model_building.n_estimators
     outs:
     - data/interim/X_test_scaled
-    - models/evaluation_data
     - reports/model.pkl
 
   result_submission:
