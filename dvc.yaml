@@ -32,10 +32,11 @@ stages:
     - reports/model.pkl
 
   result_submission:
-    cmd: python src/model/model_submission.py
+    cmd: python src/model/modelsubmission.py
     deps:
     - data/interim
     - data/raw
-    - src/model/model_submission.py
+    - src/model/modelsubmission.py
+    - reports/model.pkl
     outs:
-    - models/submission
+    - models/submission/submission_file.csv

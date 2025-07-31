@@ -45,7 +45,7 @@ def save_submission(passenger_ids: pd.Series, predictions, output_path: str):
 
 
 def main():
-    model_path = "./models/model.pkl"
+    model_path = "./reports/model.pkl"
     test_data_path = "./data/interim/X_test_scaled"
     id_data_path = "./data/raw/submission.csv"
     output_path = "./models/submission/submission_file.csv"
